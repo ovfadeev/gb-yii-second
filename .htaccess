@@ -1,9 +1,9 @@
-Options +FollowSymlinks
+Options +FollowSymLinks
 IndexIgnore */*
 RewriteEngine On
 
-RewriteCond ${REQUEST_URI} ^/admin
-RewriteRule ^/admin\/?(.*) /backend/web/$1
+RewriteCond %{REQUEST_URI} ^/admin
+RewriteRule ^admin\/?(.*) /backend/web/$1
 
-RewriteCond ${REQUEST_URI} !^/(frontend/web|backend/web|admin)
+RewriteCond %{REQUEST_URI} !^/(frontend/web|backend/web|admin)
 RewriteRule (.*) /frontend/web/$1
