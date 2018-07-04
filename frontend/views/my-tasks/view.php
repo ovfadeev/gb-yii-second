@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\repository\Tasks */
+/* @var $model common\models\repository\Tasks */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'My tasks', 'url' => ['index']];
@@ -24,22 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
       'attributes' => [
           'id',
           'name',
-          'date_create',
-          'date_update',
+          'created_at',
+          'updated_at',
           'deadline',
-          'description:ntext',
+          'description:html',
           'autor_id' => [
               'attribute' => 'autor_id',
               'value' => function ($model) {
                 $user = $model->getAutor()->where(['id' => $model->autor_id])->one();
-                return $user->getFullName();
+                return $user->username;
               }
           ],
           'performer_id' => [
               'attribute' => 'performer_id',
               'value' => function ($model) {
                 $user = $model->getPerformer()->where(['id' => $model->performer_id])->one();
-                return $user->getFullName();
+                return $user->username;
               }
           ],
           'status_id' => [
@@ -61,10 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $comment->id ?>
           </td>
           <td>
-            Автор: <?= $comment->getAutor()->where(['id' => $comment->autor_id])->one()->getFullName() ?>
+            Автор: <?= $comment->getAutor()->where(['id' => $comment->autor_id])->one()->username ?>
           </td>
           <td>
-            <?= $comment->date_update ?>
+            <?= $comment->update_at ?>
           </td>
         </tr>
         <tr>

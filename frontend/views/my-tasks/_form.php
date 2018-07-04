@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\repository\Tasks */
+/* @var $model common\models\repository\Tasks */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
   <?= $form->field($model, 'name')->textInput(['disabled' => 'disabled']) ?>
 
   <?= $form->field($model, 'autor_id')->dropDownList(
-      ArrayHelper::map($users, 'id', 'first_name'),
+      ArrayHelper::map($users, 'id', 'username'),
       [
           'disabled' => 'disabled'
       ]
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
       'disabled' => 'disabled'
   ]) ?>
 
-  <?= $form->field($model, 'performer_id')->dropDownList(ArrayHelper::map($users, 'id', 'first_name')) ?>
+  <?= $form->field($model, 'performer_id')->dropDownList(ArrayHelper::map($users, 'id', 'username')) ?>
   <?
   if ($status) {
     echo $form->field($model, 'status_id')->dropDownList(ArrayHelper::map($status, 'id', 'title'));

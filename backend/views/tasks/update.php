@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Tasks */
+/* @var $model common\models\repository\Tasks */
 
 $this->title = 'Update Tasks: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
@@ -12,10 +12,12 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="tasks-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+  <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+  <?= $this->render('_form', [
+      'model' => $model,
+      'users' => $users,
+      'status' => $status
+  ]) ?>
 
 </div>

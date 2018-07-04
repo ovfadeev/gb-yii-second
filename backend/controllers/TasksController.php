@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\repository\StatusTasks;
+use common\models\User;
 use Yii;
 use common\models\repository\Tasks;
 use common\models\repository\TasksSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +23,18 @@ class TasksController extends Controller
   public function behaviors()
   {
     return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                    'matchCallback' => function ($rule, $action) {
+                      return Yii::$app->user->can('createTask');
+                    }
+                ],
+            ],
+        ],
         'verbs' => [
             'class' => VerbFilter::className(),
             'actions' => [
@@ -70,8 +85,16 @@ class TasksController extends Controller
       return $this->redirect(['view', 'id' => $model->id]);
     }
 
+    $defStatus = StatusTasks::getDefaultStatus();
+
+    $model->autor_id = Yii::$app->user->identity->id;
+    $model->status_id = $defStatus->id;
+
+    $users = User::find()->all();
+
     return $this->render('create', [
         'model' => $model,
+        'users' => $users
     ]);
   }
 
@@ -90,8 +113,16 @@ class TasksController extends Controller
       return $this->redirect(['view', 'id' => $model->id]);
     }
 
+    $model->autor_id = Yii::$app->user->identity->id;
+
+    $status = StatusTasks::find()->all();
+
+    $users = User::find()->all();
+
     return $this->render('update', [
         'model' => $model,
+        'users' => $users,
+        'status' => $status
     ]);
   }
 

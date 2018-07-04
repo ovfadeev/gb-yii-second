@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\repository\Tasks */
+/* @var $model common\models\repository\Tasks */
 
 $this->title = 'Update my tasks: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'My tasks', 'url' => ['index']];

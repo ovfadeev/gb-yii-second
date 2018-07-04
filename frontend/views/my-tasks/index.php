@@ -65,7 +65,7 @@ if ($this->beginCache('usertask', $paramsCache)) { ?>
                     'attribute' => 'autor_id',
                     'value' => function ($model) {
                       $user = $model->getAutor()->where(['id' => $model->autor_id])->one();
-                      return $user->getFullName();
+                      return $user->username;
                     }
                 ],
                 'status_id' => [
@@ -76,7 +76,11 @@ if ($this->beginCache('usertask', $paramsCache)) { ?>
                     }
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn'
+                    'class' => 'yii\grid\ActionColumn',
+                    'visibleButtons' => [
+                        'update' => Yii::$app->user->can('updateTask'),
+                        'delete' => Yii::$app->user->can('deleteTask')
+                    ]
                 ],
             ],
         ]);

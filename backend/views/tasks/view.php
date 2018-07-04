@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Tasks */
+/* @var $model common\models\repository\Tasks */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
@@ -33,10 +33,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
             'deadline',
-            'description:ntext',
-            'autor_id',
-            'performer_id',
-            'status_id',
+            'description:html',
+            'autor_id' => [
+                'attribute' => 'autor_id',
+                'value' => function ($model) {
+                  $user = $model->getAutor()->where(['id' => $model->autor_id])->one();
+                  return $user->username;
+                }
+            ],
+            'performer_id' => [
+                'attribute' => 'performer_id',
+                'value' => function ($model) {
+                  $user = $model->getPerformer()->where(['id' => $model->performer_id])->one();
+                  return $user->username;
+                }
+            ],
+            'status_id' => [
+                'attribute' => 'status_id',
+                'value' => function ($model) {
+                  $status = $model->getStatus()->where(['id' => $model->status_id])->one();
+                  return $status->title;
+                }
+            ],
         ],
     ]) ?>
 
